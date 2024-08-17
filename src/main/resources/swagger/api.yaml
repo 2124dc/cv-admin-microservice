@@ -1,41 +1,188 @@
 openapi: 3.0.0
 info:
   version: 1.0.0
-  title: User API
-  description: API for managing users
+  title: Admin Management API
+  description: API for managing admin operations
 servers:
   - url: https://localhost:8062/ams
     description: Local server
+
 paths:
-  /admin:
-    get:
-      summary: Get Admin Details
-      operationId: getAdminDetails
+  /admin/login:
+    post:
+      summary: Admin Login
+      operationId: adminLogin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: The admin's username for login
+                password:
+                  type: string
+                  description: The admin's password for login
       responses:
         '200':
-          description: Admin details
+          description: Login successful
+        '401':
+          description: Unauthorized - Invalid credentials
+
+  /admin/hotel:
+    post:
+      summary: Add a new Hotel and Owner
+      operationId: addHotel
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hotel:
+                  $ref: '#/components/schemas/Hotel'
+                owner:
+                  $ref: '#/components/schemas/Owner'
+      responses:
+        '201':
+          description: Hotel and Owner added successfully
+        '400':
+          description: Bad Request - Invalid data
+
+  /admin/request:
+    get:
+      summary: Get Admin Requests
+      operationId: getRequest
+      parameters:
+        - in: query
+          name: status
+          schema:
+            type: string
+            description: Filter requests by their status (e.g., "pending", "accepted")
+      responses:
+        '200':
+          description: Request list retrieved successfully
           content:
             application/json:
               schema:
-                  $ref: '#/components/schemas/Admin'
+                type: array
+                items:
+                  $ref: '#/components/schemas/AdminRequest'
+        '404':
+          description: No requests found
+
+    post:
+      summary: Update Admin Request
+      operationId: updateRequest
+      parameters:
+        - in: header
+          name: requestId
+          required: true
+          schema:
+            type: string
+          description: Unique identifier of the request to be updated
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: The new status for the request (e.g., "accepted")
+      responses:
+        '200':
+          description: Request updated successfully
+        '404':
+          description: Request not found
 
 components:
   schemas:
-    Admin:
+    Address:
       type: object
       properties:
         id:
           type: string
-          description: The user ID
+          description: Unique identifier for the address
+        plotNo:
+          type: string
+          description: Plot number of the address
+        streetName:
+          type: string
+          description: Street name of the address
+        landmark:
+          type: string
+          description: A nearby landmark for the address
+        pin:
+          type: string
+          description: Postal Identification Number (PIN) code for the address
+        city:
+          type: string
+          description: City of the address
+    Owner:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the owner
         name:
           type: string
-          description: The user's name
+          description: Name of the owner
         email:
           type: string
-          description: The user's email address
+          description: Email address of the owner
         mobile:
           type: string
-          description: The user's mobile number
-        password:
+          description: Mobile phone number of the owner
+        dob:
           type: string
-          description: password
+          format: date
+          description: Date of birth of the owner
+        gender:
+          type: string
+          description: Gender of the owner
+        address:
+          $ref: '#/components/schemas/Address'
+
+    Hotel:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the hotel
+        name:
+          type: string
+          description: Name of the hotel
+        address:
+          $ref: '#/components/schemas/Address'
+        owner:
+          $ref: '#/components/schemas/Owner'
+        telephone:
+          type: string
+          description: Telephone number of the hotel
+        mobile:
+          type: string
+          description: Mobile phone number of the hotel
+        email:
+          type: string
+          description: Email address of the hotel
+
+    AdminRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the admin request
+        owner:
+          $ref: '#/components/schemas/Owner'
+
+        type:
+          type: string
+          description: Type of request made by the admin
+          enum:
+            - passwordRequest
+            - updateDetailsRequest
