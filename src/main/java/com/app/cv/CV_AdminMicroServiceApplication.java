@@ -1,4 +1,4 @@
-package com.app.cv.admin_micro_service;
+package com.app.cv;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

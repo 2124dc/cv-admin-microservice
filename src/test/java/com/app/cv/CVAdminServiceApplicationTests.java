@@ -1,4 +1,4 @@
-package com.app.cv.admin_micro_service;
+package com.app.cv;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -158,7 +158,6 @@
                         <exclude>**/generated-sources/openapi/**</exclude>
                     </excludes>
                 </configuration>
-
             </plugin>
             <plugin>
                 <groupId>org.openapitools</groupId>
@@ -175,8 +174,8 @@
                             <generatorName>spring</generatorName>
                             <supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
                             <configOptions>
-                                <apiPackage>com.app.product_service.generated.api</apiPackage>
-                                <modelPackage>com.app.product_service.generated.model</modelPackage>
+                                <apiPackage>com.app.cv.api</apiPackage>
+                                <modelPackage>com.app.cv.model</modelPackage>
                                 <sourceFolder>src/java/main</sourceFolder>
                                 <serializableModel>true</serializableModel>
                                 <delegatePattern>true</delegatePattern>

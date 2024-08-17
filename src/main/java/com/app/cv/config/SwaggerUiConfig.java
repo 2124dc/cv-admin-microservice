@@ -1,4 +1,4 @@
-package com.app.cv.admin_micro_service.config;
+package com.app.cv.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;

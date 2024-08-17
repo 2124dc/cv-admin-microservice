@@ -1,4 +1,4 @@
-package com.app.cv.admin_micro_service.service;
+package com.app.cv.service;
 
 
 import org.junit.jupiter.api.extension.ExtendWith;
