@@ -2,6 +2,9 @@ package com.app.cv.delegateImpl;
 
 import com.app.cv.api.AdminApiDelegate;
 import com.app.cv.model.*;
+import com.app.cv.serviceI.AdminServiceI;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -11,6 +14,9 @@ import java.util.Optional;
 
 @Service
 public class AdminDelegateImpl implements AdminApiDelegate {
+    @Autowired
+    AdminServiceI adminServiceI;
+
     @Override
     public Optional<NativeWebRequest> getRequest() {
         return AdminApiDelegate.super.getRequest();
@@ -23,7 +29,7 @@ public class AdminDelegateImpl implements AdminApiDelegate {
 
     @Override
     public ResponseEntity<AdminLoginResponse> adminLogin(AdminLoginRequest adminLoginRequest) {
-        return AdminApiDelegate.super.adminLogin(adminLoginRequest);
+        return new ResponseEntity<>(adminServiceI.adminLogin(adminLoginRequest), null, HttpStatus.OK);
     }
 
     @Override
@@ -36,3 +42,4 @@ public class AdminDelegateImpl implements AdminApiDelegate {
         return AdminApiDelegate.super.updateRequest(requestId, updateRequestRequest);
     }
 }
+
