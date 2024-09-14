@@ -11,7 +11,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.app</groupId>
-    <artifactId>app-cv-micro-service</artifactId>
+    <artifactId>app-cv-microservice</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>app-cv-micro-service</name>
     <description>first swagger then business logic</description>
@@ -124,6 +124,21 @@
             <version>Hoxton.SR12</version>
             <type>pom</type>
             <scope>import</scope>
+        </dependency>
+
+         <!-- Mapper Dependancy -->
+        <!-- https://mvnrepository.com/artifact/org.mapstruct/mapstruct -->
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>1.5.5.Final</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.mapstruct/mapstruct-processor -->
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+            <version>1.5.5.Final</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>

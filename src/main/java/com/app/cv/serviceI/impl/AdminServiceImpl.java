@@ -1,41 +1,39 @@
 package com.app.cv.serviceI.impl;
 
-import com.app.cv.exception.InvalidCredentialsException;
-import com.app.cv.exception.NotFountException;
-import com.app.cv.mapper.AdminMapperI;
+import com.app.cv.exception.UserAlreadyExistException;
+import com.app.cv.mapper.IAdminMapper;
 import com.app.cv.model.Admin;
-import com.app.cv.model.AdminLoginRequest;
-import com.app.cv.model.AdminLoginResponse;
-import com.app.cv.repository.AdminRepository;
+import com.app.cv.model.AuthRegisterRequest;
 import com.app.cv.serviceI.AdminServiceI;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.app.cv.repository.AdminRepository;
 
 @Service
 public class AdminServiceImpl implements AdminServiceI {
+
+    // Create a logger instance for the class
+    private static final Logger logger = LoggerFactory.getLogger(AdminServiceImpl.class);
 
     @Autowired
     AdminRepository adminRepository;
 
     @Autowired
-    AdminMapperI adminMapperI;
+    IAdminMapper mapper;
 
     @Override
-    public AdminLoginResponse adminLogin(AdminLoginRequest adminLoginRequest) {
-        Admin admin = adminRepository.findByEmail(adminLoginRequest.getUsername());
-        if (admin == null) {
-            System.out.println("Admin not found");
-            throw new NotFountException("Admin not found");
-        }else if(admin.getPassword().equals(adminLoginRequest.getPassword())){
-            System.out.println("Admin logged in");
-            AdminLoginResponse adminLoginResponse = new AdminLoginResponse();
-            adminLoginResponse.setStatus("Success");
-            adminLoginResponse.setMessage("Admin logged in");
-            return adminLoginResponse;
-//            return  adminMapperI.adminModelToGeneratedAdminResponse(admin);
-        }else{
-            System.out.println("Password Not Matched");
-            throw new InvalidCredentialsException("Invalid Credentials");
+    public Admin saveAdmin(AuthRegisterRequest authRegisterRequest) {
+        logger.info("AuthDetailsService -> saveAdmin : {}", authRegisterRequest);
+        if (adminRepository.existsByEmail(authRegisterRequest.getUsername())) {
+            logger.error("AuthDetailsService -> saveAdmin -> existsByEmail: {}", authRegisterRequest.getUsername());
+            throw new UserAlreadyExistException("Email already exists. Please choose a different email.");
         }
+        Admin admin = mapper.mapAdminData(authRegisterRequest);
+        return adminRepository.save(admin);
     }
+
+    
 }
