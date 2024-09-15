@@ -24,11 +24,7 @@ public class AdminController implements AdminApiDelegate {
     public ResponseEntity<SuccessResponse> registerAdmin(AuthRegisterRequest authRegisterRequest) {
         logger.info("AuthController -> authRegisterPost : {}", authRegisterRequest);
         Admin admin = adminService.saveAdmin(authRegisterRequest);
-        return new ResponseEntity<>(Common.getSuccessResponse("Operation Successfull", admin), HttpStatus.OK);
+        return new ResponseEntity<>(Common.getSuccessResponse("Data Saved Successfully", admin), HttpStatus.OK);
     }
-
-
-    
-    
 }
 
