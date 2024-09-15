@@ -8,11 +8,11 @@ import org.springframework.data.mongodb.config.EnableMongoAuditing;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableMongoAuditing
-public class CV_AdminMicroServiceApplication {
+public class AdminMicroserviceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(CV_AdminMicroServiceApplication.class, args);
-        System.out.println("CV_AdminMicroServiceApplication Successfully started...!!!");
+        SpringApplication.run(AdminMicroserviceApplication.class, args);
+        System.out.println("AdminMicroserviceApplication Successfully started...!!!");
     }
 
 }
